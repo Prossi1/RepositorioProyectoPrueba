@@ -6,13 +6,20 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.planificadordietas.ViewModels.AuthViewModel
-import com.example.proyecto.pages.Homepage
-import com.example.proyecto.pages.LoginPage
-import com.example.proyecto.pages.SignupPage
+import com.example.planificadordietas.ViewModels.UserProfileViewModel
+import com.example.planificadordietas.pages.Homepage
+import com.example.planificadordietas.pages.LoginPage
+import com.example.planificadordietas.pages.SignupPage
+import com.example.planificadordietas.pages.UserProfileCreationPage
+
 
 
 @Composable
-fun MyAppNavigation(modifier: Modifier = Modifier, authViewModel: AuthViewModel) {
+fun MyAppNavigation(
+   modifier: Modifier = Modifier,
+   authViewModel: AuthViewModel,
+   userProfileViewModel: UserProfileViewModel
+) {
    val navController = rememberNavController()
 
    NavHost(navController = navController, startDestination = "login", builder = {
@@ -24,6 +31,9 @@ fun MyAppNavigation(modifier: Modifier = Modifier, authViewModel: AuthViewModel)
       }
       composable("home") {
          Homepage(modifier, navController, authViewModel)
+      }
+      composable("create_profile") {
+         UserProfileCreationPage(modifier, navController, userProfileViewModel)
       }
    })
 }

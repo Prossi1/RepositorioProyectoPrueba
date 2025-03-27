@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.planificadordietas.ViewModels.AuthViewModel
+import com.example.planificadordietas.ViewModels.UserProfileViewModel
 import com.example.planificadordietas.ui.theme.PlanificadorDietasTheme
 
 class MainActivity : ComponentActivity() {
@@ -20,10 +21,15 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         val authViewModel : AuthViewModel by viewModels()
+        val userProfileViewModel: UserProfileViewModel by viewModels()
         setContent {
             PlanificadorDietasTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    MyAppNavigation(modifier = Modifier.padding(innerPadding), authViewModel= authViewModel)
+                    MyAppNavigation(
+                        modifier = Modifier.padding(innerPadding),
+                        authViewModel = authViewModel,
+                        userProfileViewModel = userProfileViewModel
+                    )
                 }
             }
         }

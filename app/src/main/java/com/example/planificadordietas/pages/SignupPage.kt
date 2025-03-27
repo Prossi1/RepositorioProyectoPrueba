@@ -1,4 +1,4 @@
-package com.example.proyecto.pages
+package com.example.planificadordietas.pages
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
