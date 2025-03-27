@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "595126213357",
+    "project_id": "planificadordietas",
+    "storage_bucket": "planificadordietas.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:595126213357:android:bdc3640ec4660d57dc8ae4",
+        "android_client_info": {
+          "package_name": "com.example.planificadordietas"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDH9vkSOy2NJaROBTLkCFxzCMPbvTJPtVg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
