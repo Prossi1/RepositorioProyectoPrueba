@@ -9,6 +9,7 @@ import com.example.planificadordietas.ViewModels.AuthViewModel
 import com.example.planificadordietas.ViewModels.UserProfileViewModel
 import com.example.planificadordietas.pages.Homepage
 import com.example.planificadordietas.pages.LoginPage
+import com.example.planificadordietas.pages.ProfileDetailsPage
 import com.example.planificadordietas.pages.SignupPage
 import com.example.planificadordietas.pages.UserProfileCreationPage
 
@@ -30,10 +31,13 @@ fun MyAppNavigation(
          SignupPage(modifier, navController, authViewModel)
       }
       composable("home") {
-         Homepage(modifier, navController, authViewModel)
+         Homepage(modifier, navController, authViewModel, userProfileViewModel)
       }
       composable("create_profile") {
          UserProfileCreationPage(modifier, navController, userProfileViewModel)
+      }
+      composable("profile_details") {
+         ProfileDetailsPage(modifier, navController, userProfileViewModel)
       }
    })
 }

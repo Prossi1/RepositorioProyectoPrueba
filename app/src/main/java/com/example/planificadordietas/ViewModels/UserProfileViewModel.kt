@@ -11,10 +11,14 @@ class UserProfileViewModel : ViewModel() {
     private val _profileState = MutableLiveData<ProfileState>()
     val profileState: LiveData<ProfileState> = _profileState
 
+    private val _userProfile = MutableLiveData<UserProfile?>()
+    val userProfile: LiveData<UserProfile?> = _userProfile
+
     sealed class ProfileState {
         object Initial : ProfileState()
         object Loading : ProfileState()
         object Success : ProfileState()
+        object ProfileExists : ProfileState()
         data class Error(val message: String) : ProfileState()
     }
 
@@ -26,15 +30,6 @@ class UserProfileViewModel : ViewModel() {
         gender: String,
         fitnessGoal: String
     ) {
-        // Validate input
-        if (name.isBlank()) {
-            _profileState.value = ProfileState.Error("Name cannot be empty")
-            return
-        }
-
-        _profileState.value = ProfileState.Loading
-
-        // Get current user's email
         val currentUser = FirebaseAuth.getInstance().currentUser
         currentUser?.let { user ->
             val userProfile = UserProfile(
@@ -47,13 +42,13 @@ class UserProfileViewModel : ViewModel() {
                 fitnessGoal = fitnessGoal
             )
 
-            // Save to Firestore
             FirebaseFirestore.getInstance()
                 .collection("users")
                 .document(user.uid)
                 .set(userProfile)
                 .addOnSuccessListener {
                     _profileState.value = ProfileState.Success
+                    _userProfile.value = userProfile
                 }
                 .addOnFailureListener { exception ->
                     _profileState.value = ProfileState.Error(
@@ -62,6 +57,32 @@ class UserProfileViewModel : ViewModel() {
                 }
         } ?: run {
             _profileState.value = ProfileState.Error("No authenticated user found")
+        }
+    }
+
+    fun checkUserProfile() {
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        currentUser?.let { user ->
+            _profileState.value = ProfileState.Loading
+
+            FirebaseFirestore.getInstance()
+                .collection("users")
+                .document(user.uid)
+                .get()
+                .addOnSuccessListener { document ->
+                    if (document.exists()) {
+                        val profile = document.toObject(UserProfile::class.java)
+                        _userProfile.value = profile
+                        _profileState.value = ProfileState.ProfileExists
+                    } else {
+                        _profileState.value = ProfileState.Initial
+                    }
+                }
+                .addOnFailureListener { exception ->
+                    _profileState.value = ProfileState.Error(
+                        exception.localizedMessage ?: "Failed to retrieve profile"
+                    )
+                }
         }
     }
 }
