@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.planificadordietas.ViewModels.AuthViewModel
 import com.example.planificadordietas.ViewModels.UserProfileViewModel
+import com.example.planificadordietas.pages.HelpPage
 import com.example.planificadordietas.pages.Homepage
 import com.example.planificadordietas.pages.LoginPage
 import com.example.planificadordietas.pages.ProfileDetailsPage
@@ -38,6 +39,10 @@ fun MyAppNavigation(
       }
       composable("profile_details") {
          ProfileDetailsPage(modifier, navController, userProfileViewModel)
+      }
+
+      composable("help") {
+         HelpPage(modifier, navController)
       }
    })
 }
